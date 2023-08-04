@@ -13,5 +13,23 @@ function getComputerChoice() {
     return "scissors"
 }
 
-let choice = getComputerChoice();
-console.log(choice);
+function playRound(playerSelection, computerSelection) {
+  const parsedPlayerSelection = playerSelection.toLowerCase();
+  if (parsedPlayerSelection === computerSelection){
+    return "Draw!";
+  }
+  else if ((parsedPlayerSelection === "rock" && computerSelection === "scissors") || 
+  (parsedPlayerSelection === "paper" && computerSelection === "rock") ||
+  (parsedPlayerSelection === "scissors" && computerSelection === "paper")) {
+    return `You win! ${parsedPlayerSelection} beats ${computerSelection}`;
+  }
+  else {
+    return `You lose! ${computerSelection} beats ${parsedPlayerSelection}`;
+  }
+}
+
+const playerSelection = "ROCK";
+const computerSelection = getComputerChoice();
+
+const result = playRound(playerSelection, computerSelection);
+console.log(result);
