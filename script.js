@@ -15,8 +15,9 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
   const parsedPlayerSelection = playerSelection.toLowerCase();
+
   if (parsedPlayerSelection === computerSelection){
-    return "Draw!";
+    return `Draw! ${parsedPlayerSelection} against ${computerSelection}`;
   }
   else if ((parsedPlayerSelection === "rock" && computerSelection === "scissors") || 
   (parsedPlayerSelection === "paper" && computerSelection === "rock") ||
@@ -28,8 +29,19 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-const playerSelection = "ROCK";
-const computerSelection = getComputerChoice();
+function game(){
+  let playerScore = 0;
+  let computerScore = 0;
 
-const result = playRound(playerSelection, computerSelection);
-console.log(result);
+  for(let i=0; i<5; i++){
+    const result = playRound(prompt("rock, paper or scissors?"), getComputerChoice());
+    if (result[4] === "w"){
+      playerScore++;  
+    }
+    else if (result[4] === "l"){
+      computerScore++;
+    }
+    console.log(result + `. Player ${playerScore} - Computer ${computerScore}`);
+  }
+}
+game();
