@@ -13,21 +13,23 @@ function playRound(playerSelection, computerSelection) {
   const parsedPlayerSelection = playerSelection.toLowerCase();
   let result = "";
   if (parsedPlayerSelection === computerSelection){
-    result = `Draw! ${parsedPlayerSelection} against ${computerSelection}`;
+    result = `Draw! ${parsedPlayerSelection} against ${computerSelection}.`;
   }
   else if ((parsedPlayerSelection === "rock" && computerSelection === "scissors") || 
   (parsedPlayerSelection === "paper" && computerSelection === "rock") ||
   (parsedPlayerSelection === "scissors" && computerSelection === "paper")) {
-    result = `You win! ${parsedPlayerSelection} beats ${computerSelection}`;
+    result = `You win the round! ${parsedPlayerSelection} beats ${computerSelection}.`;
   }
   else {
-    result = `You lose! ${computerSelection} beats ${parsedPlayerSelection}`;
+    result = `You lose the round! ${computerSelection} beats ${parsedPlayerSelection}.`;
   }
   display.textContent = result;
   return result;
 }
 
 function keepScore(result){
+    if(playerScore === 5 || computerScore === 5)
+      return;
     if (result[0]==="D")
       return;
     if (result[4] === "w"){
@@ -37,6 +39,32 @@ function keepScore(result){
       computerScore++;
     }
     scoreCard.textContent = `Player: ${playerScore} - Computer: ${computerScore}`;
+
+    if(playerScore === 5){
+      announceWinner("You");
+    }
+    if(computerScore === 5){
+      announceWinner("Computer");
+    }
+}
+
+function announceWinner(winner){
+  display.textContent = `${winner} won the game!`;
+  rock.removeEventListener("click", playRock)
+  paper.removeEventListener("click", playPaper);
+  scissors.removeEventListener("click", playScissors);
+  
+}
+
+function playRock() {
+    keepScore(playRound("rock", getComputerChoice()));
+}
+function playPaper() {
+  keepScore(playRound("paper", getComputerChoice()));
+
+}
+function playScissors () {
+  keepScore(playRound("scissors", getComputerChoice()));
 }
 
 let playerScore = 0;
@@ -47,9 +75,6 @@ const scissors = document.querySelector("#scissors-btn");
 const display = document.querySelector("#display");
 const scoreCard = document.querySelector("#score-card");
 
-rock.addEventListener("click", () => {
-  keepScore(playRound("rock", getComputerChoice()))});
-paper.addEventListener("click", () => {
-  keepScore(playRound("paper", getComputerChoice()))});
-scissors.addEventListener("click", () => {
-  keepScore(playRound("scissors", getComputerChoice()))});
+rock.addEventListener("click", playRock)
+paper.addEventListener("click", playPaper);
+scissors.addEventListener("click", playScissors);
