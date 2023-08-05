@@ -28,8 +28,6 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function keepScore(result){
-    if(playerScore === 5 || computerScore === 5)
-      return;
     if (result[0]==="D")
       return;
     if (result[4] === "w"){
